@@ -126,6 +126,16 @@ static NSMutableDictionary<NSString *, RNVoipPushNotificationCompletion> *comple
     if (_isVoipRegistered) {
 #ifdef DEBUG
         RCTLog(@"[RNVoipPushNotificationManager] voipRegistration is already registered");
+        
+        dispatch_queue_t mainQueue = dispatch_get_main_queue();
+        dispatch_async(mainQueue, ^{
+            // --- Create a push registry object
+            PKPushRegistry * voipRegistry = [[PKPushRegistry alloc] initWithQueue: mainQueue];
+            // --- Set the registry's delegate to AppDelegate
+            voipRegistry.delegate = (RNVoipPushNotificationManager *)RCTSharedApplication().delegate;
+            // ---  Set the push type to VoIP
+            voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+        });
 #endif
     } else {
         _isVoipRegistered = YES;
