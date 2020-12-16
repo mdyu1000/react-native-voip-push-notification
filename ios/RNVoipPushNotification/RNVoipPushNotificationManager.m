@@ -124,7 +124,7 @@ static NSMutableDictionary<NSString *, RNVoipPushNotificationCompletion> *comple
 + (void)voipRegistration
 {
     if (_isVoipRegistered) {
-#ifdef DEBUG
+// #ifdef DEBUG
         RCTLog(@"[RNVoipPushNotificationManager] voipRegistration is already registered");
         
         dispatch_queue_t mainQueue = dispatch_get_main_queue();
@@ -136,12 +136,12 @@ static NSMutableDictionary<NSString *, RNVoipPushNotificationCompletion> *comple
             // ---  Set the push type to VoIP
             voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
         });
-#endif
+// #endif
     } else {
         _isVoipRegistered = YES;
-#ifdef DEBUG
+// #ifdef DEBUG
         RCTLog(@"[RNVoipPushNotificationManager] voipRegistration enter");
-#endif
+// #endif
         dispatch_queue_t mainQueue = dispatch_get_main_queue();
         dispatch_async(mainQueue, ^{
             // --- Create a push registry object
